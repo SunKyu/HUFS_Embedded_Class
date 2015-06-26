@@ -28,8 +28,8 @@ static int use_hash_tbl=0, max_hash_tbl_size=0, log_stats=0, max_stats=0;
 
 /* Tmp variable to sanitize user input config data */
 static char proc_test_config_buff_tmp[CONFIG_BUFF_MAX_SIZE] = "0 0 0 0";
-static int use_hash_tbl_tmp=0, max_hash_tbl_size_tmp=0, log_stats_tmp=0,
-           max_stats_tmp=0;
+//static int use_hash_tbl_tmp=0, max_hash_tbl_size_tmp=0, log_stats_tmp=0,
+//           max_stats_tmp=0;
 
 #define MAX_CONFIG_ENTRIES2 6
 static int proc_test_config_buff2[MAX_CONFIG_ENTRIES2] = {20,21,22,23,24,25};
