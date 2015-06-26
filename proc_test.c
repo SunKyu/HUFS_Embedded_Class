@@ -24,7 +24,7 @@ static char proc_test_config_buff_format[] = "Format: \n"
     "   whether to log statistics \n"
     "   Max number of statistics to be stored \n";
 
-static int use_hash_tbl=0, max_hash_tbl_size=0, log_stats=0, max_stats=0;
+//static int use_hash_tbl=0, max_hash_tbl_size=0, log_stats=0, max_stats=0;
 
 /* Tmp variable to sanitize user input config data */
 static char proc_test_config_buff_tmp[CONFIG_BUFF_MAX_SIZE] = "0 0 0 0";
@@ -179,6 +179,7 @@ static ssize_t proc_test_config_write(struct file *file,
 {
     char *buff, *buff1, **end_ptr = NULL;
     unsigned int i;
+    static int use_hash_tbl=0, max_hash_tbl_size=0, log_stats=0, max_stats=0;
 
     if (size > CONFIG_BUFF_MAX_SIZE)
         return 0;
