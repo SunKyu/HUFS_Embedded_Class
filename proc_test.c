@@ -81,7 +81,7 @@ static void *proc_test_config_start(struct seq_file *m, loff_t * pos)
 
         /* beginning a new sequence ? */
         //if (*pos == 0) {
-	printk("seq_start invoked at beg of first sequence \r\n");
+	//printk("seq_start invoked at beg of first sequence \r\n");
 	switch(*pos){
 	case 0:
                 m->private = (void *)&cur_array_num;
@@ -91,7 +91,7 @@ static void *proc_test_config_start(struct seq_file *m, loff_t * pos)
                 return &entry_num;
        //} else if (*pos == 1) {
 	case 1:
-		printk("\n\nseq_start invoked at beg of second sequence \r\n");
+		//printk("\n\nseq_start invoked at beg of second sequence \r\n");
                 cur_array_num++;
                 entry_num=0;
                 m->private = (void *)&cur_array_num;
@@ -102,7 +102,7 @@ static void *proc_test_config_start(struct seq_file *m, loff_t * pos)
        // } else {
                 /* no => it's the end of the sequence, return end to stop reading */
 	default :
-		printk("seq_start invoked at end of sequence \r\n");
+		//printk("seq_start invoked at end of sequence \r\n");
                 *pos = 0;
                 cur_array_num=1;
                 return NULL;
@@ -121,11 +121,11 @@ static void *proc_test_config_next(struct seq_file *m, void *entry_num,
 
     if (cur_array_num == 1)
     {
-printk("seq_next invoked in first sequence \r\n");
+//printk("seq_next invoked in first sequence \r\n");
         *pos = 1;
         return NULL;            /* all data is displayed in one chunk */
     } else if (cur_array_num == 2) {
-printk("seq_next invoked in second sequence, entry num = %d \r\n", *((int *)entry_num));
+//printk("seq_next invoked in second sequence, entry num = %d \r\n", *((int *)entry_num));
         if (*((int *)entry_num) < MAX_CONFIG_ENTRIES2)
         {
             (*(int *)entry_num)++;
@@ -141,10 +141,10 @@ static void proc_test_config_stop(struct seq_file *m, void *entry_num)
 {
     if (*((int *)m->private) == 1)
     {
-printk("seq_stop invoked in first sequence \r\n");
+//printk("seq_stop invoked in first sequence \r\n");
         return;
     } else if (*((int *)m->private) == 2) {
-printk("seq_stop invoked in second sequence");
+//printk("seq_stop invoked in second sequence");
         seq_printf(m, "\n\n ");
         return;
     }
@@ -154,15 +154,15 @@ static int proc_test_config_read(struct seq_file *m, void *entry_num)
 {
     int cur_array_num=*((int *)m->private);
 
-printk("seq_show invoked in sequence %d \r\n", cur_array_num);
+//printk("seq_show invoked in sequence %d \r\n", cur_array_num);
 
     if (cur_array_num == 1)
     {
-printk("seq_show invoked in first sequence \r\n");
+//printk("seq_show invoked in first sequence \r\n");
         seq_printf(m, "\n%s \n\n%s \n\n", proc_test_config_buff,
                 proc_test_config_buff_format);
     } else if (cur_array_num == 2) {
-printk("seq_show invoked in second sequence \r\n");
+//printk("seq_show invoked in second sequence \r\n");
         if (*((int*)entry_num) < MAX_CONFIG_ENTRIES2)
             seq_printf(m, "%d ", proc_test_config_buff2[*((int *)entry_num)]);
     }
@@ -240,7 +240,7 @@ int proc_test_init(void)
         proc_test_dir = proc_mkdir(PROC_TEST_DIR, NULL);
         if (!proc_test_dir)
         {
-            printk("PROC_TEST_DIR creation failed.. Exiting. \r\n");
+            //printk("PROC_TEST_DIR creation failed.. Exiting. \r\n");
             return -1;
         }
 
@@ -249,24 +249,24 @@ int proc_test_init(void)
                                 proc_test_dir, &proc_test_config_file_ops);
 
         if (proc_test_dir == NULL) {
-                printk("Could not create /proc/%s/%s\n", PROC_TEST_DIR,
-                       PROC_TEST_CONFIG_FILE);
+                //printk("Could not create /proc/%s/%s\n", PROC_TEST_DIR,
+                //       PROC_TEST_CONFIG_FILE);
                 remove_proc_entry(PROC_TEST_DIR, NULL);
                 return -1;
         }
 
-        printk("/proc/%s/%s created\n",
-               PROC_TEST_DIR, PROC_TEST_CONFIG_FILE);
+        //printk("/proc/%s/%s created\n",
+               //PROC_TEST_DIR, PROC_TEST_CONFIG_FILE);
 
         return 0;
 }
 
 static void proc_test_exit(void)
 {
-        printk("proc test module de-init: start");
+        //printk("proc test module de-init: start");
         remove_proc_entry(PROC_TEST_CONFIG_FILE, proc_test_dir);
         remove_proc_entry(PROC_TEST_DIR, NULL);
-        printk("proc test module de-init: iend");
+        //printk("proc test module de-init: iend");
 }
 
 module_init(proc_test_init);
